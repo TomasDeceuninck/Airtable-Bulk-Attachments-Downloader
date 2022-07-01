@@ -4,20 +4,28 @@ import * as https from 'https'
 
 // Step 1: Change your Row type
 type RowType = {
-    'Name': string,
-    Class: string,
-    Attachments: string,
-    'Remarks (if any)': string
+    'ID': string,
+    'Volgnummer': string,
+    'Uitgave Datum': string,
+    'Beschrijving': string,
+    'Attachments': string,
+    'Leverancier': string,
+    'Notes': string,
+    'Terugbetaling Naam': string,
+    'Terugbetaling Rekeningnummer': string,
+    'Betaald': string,
+    'Betaling Datum': string,
+    'Name (from Leverancier)': string,
+    'Last Modified Time': string
 }
-
 const fileName: string = "urls.csv";
 const downloadsFolder: string = 'downloaded'
-const folderDist: keyof RowType = 'Class'
+const folderDist: keyof RowType = 'Volgnummer'
 // Enter the column in which the urls are...
 const attachmentsColumnNumber: keyof RowType = "Attachments"
 const urlRegex = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/
 // Define this if you want to override the downloaded file name
-const namingFn = (record: RowType, ext: string, index: number) => `${record.Class}-${index + 1}.${ext}`
+const namingFn = (record: RowType, ext: string, index: number) => `${record['Volgnummer']}_${record['Uitgave Datum'].replace(new RegExp('/', 'g'),'-')}_${index + 1}.${ext}`
 
 const results: Array<RowType> = [];
 fs.createReadStream(fileName)
